@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Presentation</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style>
+      	body {
+            background-color: #ffd;
+            color: #333;
+            font-size: 5vmin;
+            overflow-y: hidden;
+      	}
+      	div.slide {
+            height: 100vh;
+            padding: 1em;
+      	}
+      	h1 { 
+            font-weight: bold; margin: 0 0 0.5em 0;
+        }
+      	pre {
+            color: pink;
+            background: black;
+            padding: 1em;
+            border-radius: 10px;
+            font-size: 4vmin;
+            overflow-x: auto;
+        }
+        p.page_number {
+            font-size: 3vmin;
+            position: fixed;
+            bottom: 0.5em;
+            right: 1.5em;
+        }
+        p.author {
+            font-size: 3vmin;
+            position: fixed;
+            bottom: 0.5em;
+            left: 1.5em;
+        }
+        img {
+            max-width: 35vw;
+            max-height: 66vh;
+            float: right;
+            color: blue;
+            margin: 1vmin 1vmin 7vmin 7vmin;
+        }
+        img.wide {
+            display: block;
+            float: none;
+            max-width: 100%;
+			max-height: 90vh;
+            margin: 1vmin auto;
+        }
+        img.tall {
+            max-height: 90vh;
+            max-width: unset;
+        }
+        img.tall-ish {
+            max-height: 60vh;
+            max-width: unset;
+        }
+        @media print{
+            div.slide { 
+                height: auto !important;
+                min-height: 0; 
+                page-break-after: always;
+            }
+            img {
+                max-height: 300px !important;
+            }
+            p.page_number {
+                display: none;
+            }
+        }
+  	</style>
+</head>
+
+<body>
+    <div class="slide">
+      	<h1>Slide 1</h1>
+            <p>This is <strong>minslides</strong>, the minimalistic HTML slide presentation "framework".
+            <p>Press the <strong>J</strong> key on your keyboard to go the next slide.
+    </div>
+    <div class="slide">
+        <h1>Slide 2</h1>
+        <ul>
+            <li>Almost nothing
+            <li>Just a single web page
+            <li>Keyboard driven slides!
+        </ul>
+        <p>(Try <strong>K</strong> to go back, then <strong>J</strong> to return.)
+    </div>
+    <div class="slide">
+      	<h1>Slide 3</h1>
+        <pre>&lt;div class="slide"&gt;Your content here...&lt;/div&gt;</pre>
+    </div>
+
+
+    <script>
+        var slides = document.getElementsByClassName("slide");
+        var current = 0;
+        var name = "Name";
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var author = document.createElement('p');
+            author.className = 'author';
+            author.textContent = name;
+            document.body.appendChild(author);
+
+            var slideNumber = document.createElement('p');
+            slideNumber.className = 'page_number';
+            slideNumber.textContent = (current + 1) + '/' + slides.length;
+            document.body.appendChild(slideNumber);
+        });
+
+        document.addEventListener('keypress', function(event){
+            if(event.key == 'j'){ current++; }
+            if(event.key == 'k'){ current--; }
+            if(current < 0){ current = 0; }
+            if(current >= slides.length){ current = slides.length - 1; }
+            slides[current].scrollIntoView();
+
+            var slideNumber = document.getElementsByClassName("page_number")[0];
+            slideNumber.textContent = (current + 1) + '/' + slides.length;
+        });
+    </script>
+</body>
+</html>
